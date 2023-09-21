@@ -1,4 +1,11 @@
-exports.consistentHash = require("./consistentHash");
-exports.getBrokers = require("./getBrokers");
-exports.tcpClient = require("./tcpClient");
-exports.tcpServer = require("./tcpServer");
+const consistentHash = require("./consistentHash");
+const getBrokers = require("./getBrokers");
+const tcpClient = require("./tcpClient");
+const tcpServer = require("./tcpServer");
+
+module.exports = {
+    consistentHash,
+    getBrokers,
+    tcpClient,
+    tcpServer,
+};
