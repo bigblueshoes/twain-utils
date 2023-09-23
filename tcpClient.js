@@ -7,13 +7,11 @@ const tcpClient = (host, port, opts= { keepConnection: true }) => {
     const send = (data) => {
       return new Promise(resolve => {
         const buffer = Buffer.from(JSON.stringify(data));
-        client.write(buffer);
-        client.on("data", (buffer) => {
-          console.log("buffer", buffer);
-          const response = JSON.parse(buffer.toString("utf-8"));
-          console.log("response", response)
+        client.on("data", (returnedData) => {
+          const response = JSON.parse(returnedData.toString("utf-8"));
           resolve(response);
         });
+        client.write(buffer);
       });
     }
     const init = async (init_data) => {
