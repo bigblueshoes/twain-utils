@@ -21,17 +21,7 @@ const tcpClient = (host, port, opts= { keepConnection: true }) => {
           resolve(response);
         });
         client.write(buffer);
-      });
-    }
-    const sendAndEnd = (data) => {
-      return new Promise(resolve => {
-        const buffer = Buffer.from(JSON.stringify(data));
-        client.on("data", (returnedData) => {
-          const response = JSON.parse(returnedData.toString("utf-8"));
-          resolve(response);
-        });
-        client.write(buffer);
-        end();
+        client.write('<<<END>>>');
       });
     }
     const init = async (init_data) => {
