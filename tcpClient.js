@@ -7,6 +7,7 @@ const tcpClient = (host, port, opts= { keepConnection: true }) => {
     const send = (data) => {
       return new Promise(resolve => {
         const buffer = Buffer.from(JSON.stringify(data));
+        console.log("buffer length", buffer.length);
         client.on("data", (returnedData) => {
           const response = JSON.parse(returnedData.toString("utf-8"));
           resolve(response);
