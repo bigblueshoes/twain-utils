@@ -1,5 +1,14 @@
 const net = require('net');
 
+const isValidJSON = str => {
+  try {
+    JSON.parse(str);
+  } catch {
+    return false;
+  }
+  return true;
+}
+
 const tcpClient = (host, port, opts= { keepConnection: true }) => {
     const client = new net.Socket()
     const connect = () => client.connect({ port, host });
@@ -8,6 +17,7 @@ const tcpClient = (host, port, opts= { keepConnection: true }) => {
       return new Promise(resolve => {
         const buffer = Buffer.from(JSON.stringify(data));
         console.log("buffer length", buffer.length);
+        console.log("isValidJSON", isValidJSON(buffer));
         client.on("data", (returnedData) => {
           const response = JSON.parse(returnedData.toString("utf-8"));
           resolve(response);
