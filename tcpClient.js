@@ -24,7 +24,9 @@ const tcpClient = (host, port, opts= { keepConnection: true }) => {
           const response = JSON.parse(returnedData.toString("utf-8"));
           resolve(response);
         });
-        client.write(buffer);
+        client.write(buffer, 'utf8', () => {
+          client.end();
+        });
       });
     }
     const init = async (init_data) => {
