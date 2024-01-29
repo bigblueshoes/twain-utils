@@ -29,7 +29,7 @@ const tcpClient = (host, port, opts= { keepConnection: true }) => {
       if (opts.keepConnection) client.on('close', () => init(init_data));
       return await send(init_data);
     }
-    return { init, send, connect, end, sendAndEnd, client }
+    return { init, send, connect, end, client }
 }
 
 exports.tcpClient = tcpClient;
