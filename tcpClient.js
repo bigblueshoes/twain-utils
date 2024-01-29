@@ -13,7 +13,7 @@ const tcpClient = (host, port, opts= { keepConnection: true }) => {
     const client = new net.Socket()
     const connect = () => client.connect({ port, host });
     const end = () => client.end();
-    const send = (data) => {
+    const send = (data, sendEndNotif=true) => {
       return new Promise(resolve => {
         const buffer = Buffer.from(JSON.stringify(data));
         client.on("data", (returnedData) => {
@@ -21,13 +21,13 @@ const tcpClient = (host, port, opts= { keepConnection: true }) => {
           resolve(response);
         });
         client.write(buffer);
-        client.write('<<<END>>>');
+        if(sendEndNotif) client.write('<<<END>>>');
       });
     }
     const init = async (init_data) => {
       connect();
       if (opts.keepConnection) client.on('close', () => init(init_data));
-      return await send(init_data);
+      return await send(init_data, false);
     }
     return { init, send, connect, end, client }
 }
